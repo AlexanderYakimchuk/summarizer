@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+{{ form.csrf_token }}
+<div class="formwrapper">
+  <h2 class="title">Реферування - Аршакян Г.Д.</h2>
+  <form method="POST" action="/">
+    <div class="form-field">{{ form.language.label }} {{ form.language}}
+          {% if form.language.errors %}
+          <ul class="errors">
+            {% for error in form.language.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+    </div>
+    <div class="form-field">{{ form.rows.label }} {{ form.rows(size=20) }}
+      {% if form.rows.errors %}
+        <ul class="errors">
+          {% for error in form.rows.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+    <div class="form-field">{{ form.body.label }} {{ form.body }}
+      {% if form.body.errors %}
+        <ul class="errors">
+          {% for error in form.body.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+    {{ form.submit }}
+  </form>
+  {% if form.result %}
+  <div class="result">
+    <h2>Результат</h2>
+    <p>{{form.result}}</p>
+    <p>Косинус подібності: {{form.cosine}}</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

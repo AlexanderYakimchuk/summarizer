@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div class="formwrapper">
+  <h2 class="title">Реферування - Аршакян Г.Д.</h2>
+  <form method="POST" action="/">
+    <div class="form-field">{{ form.rows.label }} {{ form.rows(size=20) }}
+      {% if form.rows.errors %}
+        <ul class="errors">
+          {% for error in form.rows.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+    <div class="form-field">{{ form.body.label }} {{ form.body }}
+      {% if form.body.errors %}
+        <ul class="errors">
+          {% for error in form.body.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+    {{ form.submit }}
+  </form>
+</div>
+{% endblock %}
