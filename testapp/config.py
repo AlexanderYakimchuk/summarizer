@@ -1,5 +1,11 @@
 """App configuration."""
+from enum import Enum
 from os import environ
+
+
+class Lang(Enum):
+    UA = 'uk'
+    RU = 'ru'
 
 
 class Config:

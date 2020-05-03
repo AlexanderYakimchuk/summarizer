@@ -1,9 +1,9 @@
 from flask import Flask, url_for, render_template, redirect
 from .forms import AbstractForm
-from GeneralSummarizer import summarize
-from VectorMeasuresCalculator import get_cosine, text_to_vector
+from .summarizers.general import summarize
+from .measures import get_cosine, text_to_vector
 import os
-from .config import Config
+from .config import Config, Lang
 
 SECRET_KEY = os.urandom(32)
 
@@ -19,25 +19,9 @@ def home():
     form = AbstractForm()
     if form.is_submitted():
         form.result = summarize(
-            form.body.data, form.language.data, int(form.rows.data))
+            form.body.data, Lang(form.language.data), int(form.rows.data))
         form.cosine = get_cosine(text_to_vector(
             form.body.data), text_to_vector(form.result))
-        return render_template('abstract.html',
-                           form=form,
-                           template='form-template')
-    return render_template('abstract.html',
-                           form=form,
-                           template='form-template')
-
-
-@app.route('/abstract', methods=('GET', 'POST'))
-def abstract():
-    form = AbstractForm()
-    if form.is_submitted():
-        form.result = summarize(
-            form.body.data, form.language.data, int(form.rows.data))
-        form.cosine = get_cosine(text_to_vector(
-            form.body.data), text_to_vector(form.result.data))
         return render_template('abstract.html',
                                form=form,
                                template='form-template')

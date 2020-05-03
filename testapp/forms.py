@@ -1,15 +1,12 @@
-from flask_wtf import FlaskForm, RecaptchaField
+from flask_wtf import FlaskForm
 from wtforms import (StringField,
                      TextAreaField,
                      SubmitField,
-                     PasswordField,
-                     DateField,
                      SelectField)
 from wtforms.validators import (DataRequired,
-                                Email,
-                                EqualTo,
-                                Length,
-                                URL)
+                                Length)
+
+from testapp.config import Lang
 
 
 class AbstractForm(FlaskForm):
@@ -21,9 +18,8 @@ class AbstractForm(FlaskForm):
         Length(min=4, message='Текст дуже короткий')])
     language = SelectField(
         'Мова',
-        choices=[('ukrainian', 'Українська'), ('russian', 'Російська')]
+        choices=[(Lang.UA.value, 'Українська'), (Lang.RU.value, 'Російська')]
     )
     submit = SubmitField('Реферат!')
     result = ''
     cosine = 0
-    
